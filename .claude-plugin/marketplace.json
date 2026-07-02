@@ -1,0 +1,11 @@
+{
+  "name": "zettelkasten-luhmann",
+  "owner": {"name": "Danilo Neto"},
+  "plugins": [
+    {
+      "name": "zettelkasten-luhmann",
+      "source": "./",
+      "description": "Zettelkasten with Luhmann's mindset: notes as contestable claims + forced filing decisions in your Obsidian vault."
+    }
+  ]
+}

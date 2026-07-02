@@ -1,0 +1,8 @@
+{
+  "name": "zettelkasten-luhmann",
+  "version": "1.1.0",
+  "description": "Zettelkasten note-writing and filing with Niklas Luhmann's mindset: notes as contestable claims, forced filing decisions, cross-cluster surprise connections. Works in any language; can bootstrap a vault from scratch.",
+  "author": {"name": "Danilo Neto"},
+  "license": "MIT",
+  "keywords": ["zettelkasten", "obsidian", "notes", "pkm", "luhmann"]
+}
