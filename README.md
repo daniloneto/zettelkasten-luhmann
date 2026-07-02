@@ -65,7 +65,7 @@ Works in any language (converses in yours; writes notes in the vault's language)
 **Claude Code:**
 
 ```
-/plugin marketplace add YOUR-USERNAME/zettelkasten-luhmann
+/plugin marketplace add daniloneto/zettelkasten-luhmann
 /plugin install zettelkasten-luhmann@zettelkasten-luhmann
 ```
 
