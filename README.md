@@ -2,7 +2,7 @@
 
 **[English below](#english)**
 
-Skill de Claude que aplica a mentalidade de Niklas Luhmann ao seu Zettelkasten no Obsidian: notas como **teses contestáveis** (não tópicos), **arquivamento forçado** (você decide onde cada nota entra — a decisão é o exercício) e **conexões-surpresa** entre clusters diferentes.
+Skill de Claude que aplica a mentalidade de Niklas Luhmann ao seu Zettelkasten em Markdown: notas como **teses contestáveis** (não tópicos), **arquivamento forçado** (você decide onde cada nota entra — a decisão é o exercício) e **conexões-surpresa** entre clusters diferentes.
 
 Luhmann escreveu 70 livros não acumulando conteúdo, mas forçando cada nota nova a entrar numa conversa com as existentes. Esta skill reproduz as três práticas que tornavam isso possível — e devolve a decisão a você, sempre.
 
@@ -46,7 +46,7 @@ Testada em 6 cenários (criação de nota, processamento de fleeting, resistênc
 
 # English
 
-A Claude skill that applies Niklas Luhmann's mindset to your Obsidian Zettelkasten: notes as **contestable claims** (not topics), **forced filing decisions** (you choose where each note enters — the decision is the exercise), and **surprise connections** across clusters.
+A Claude skill that applies Niklas Luhmann's mindset to your plain-Markdown Zettelkasten: notes as **contestable claims** (not topics), **forced filing decisions** (you choose where each note enters — the decision is the exercise), and **surprise connections** across clusters.
 
 Luhmann wrote 70 books not by hoarding content, but by forcing every new note into a conversation with the existing ones. This skill reproduces the three practices that made it possible — and always hands the decision back to you.
 
@@ -65,7 +65,7 @@ Works in any language (converses in yours; writes notes in the vault's language)
 **Claude Code:**
 
 ```
-/plugin marketplace add daniloneto/zettelkasten-luhmann
+/plugin marketplace add YOUR-USERNAME/zettelkasten-luhmann
 /plugin install zettelkasten-luhmann@zettelkasten-luhmann
 ```
 
