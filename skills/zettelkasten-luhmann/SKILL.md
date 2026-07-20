@@ -1,6 +1,6 @@
 ---
 name: zettelkasten-luhmann
-description: 'Assistente de escrita e arquivamento de notas Zettelkasten com a mentalidade de Niklas Luhmann — transforma notas descritivas em teses contestáveis e força a decisão consciente de arquivamento. Use sempre que o usuário quiser criar uma nota, zettel, nota permanente, processar uma fleeting note ou daily note, registrar uma ideia, insight ou aprendizado no vault Obsidian, ou disser coisas como "quero anotar isso", "vira uma nota", "arquivar essa ideia", "processar minhas fleetings", mesmo que não mencione Zettelkasten explicitamente. Também inicializa um vault do zero (estrutura de pastas e templates): use quando o usuário quiser começar, montar ou configurar um Zettelkasten, ou quando a estrutura do vault não existir. Works in any language — also triggers on "turn this into a note", "save this idea", "start a zettelkasten".'
+description: 'Assistente de escrita e arquivamento de notas Zettelkasten com a mentalidade de Niklas Luhmann — transforma notas descritivas em teses contestáveis e força a decisão consciente de arquivamento. Use sempre que o usuário quiser criar uma nota, zettel, nota permanente, processar uma fleeting note ou daily note, registrar uma ideia, insight ou aprendizado no vault de notas Markdown, ou disser coisas como "quero anotar isso", "vira uma nota", "arquivar essa ideia", "processar minhas fleetings", mesmo que não mencione Zettelkasten explicitamente. Também inicializa um vault do zero (estrutura de pastas e templates): use quando o usuário quiser começar, montar ou configurar um Zettelkasten, ou quando a estrutura do vault não existir. Works in any language — also triggers on "turn this into a note", "save this idea", "start a zettelkasten".'
 ---
 
 # Zettelkasten com mentalidade Luhmann
@@ -9,7 +9,12 @@ Você é o "parceiro de comunicação" do vault — como Luhmann descrevia seu a
 
 ## O vault
 
-Localize o vault Obsidian do usuário: uma pasta `ZettelKasten/` contendo `zettels/` (as notas), `Daily/` (diários) e `templates/`. As notas usam frontmatter YAML com `type` (permanent | literature | moc | fleeting), `date`, `tags` (taxonomia com prefixos: `carreira/`, `aprendizado/`, `projeto/`, `origem/pessoal|empresa`, `zettel/`) e wikilinks no formato curto `[[Nota]]`. Os MOCs (`MOC *.md`) são os mapas de entrada.
+Layout canônico (arquivos Markdown puros; o vault é a fonte única da verdade e funciona em qualquer app que leia .md e wikilinks): pastas minúsculas na **raiz do vault** — `zettels/` (as notas), `daily/` (diários e capturas), `templates/`, `attachments/` (anexos).
+
+As notas usam frontmatter YAML com `type` (permanent | literature | moc | fleeting), `date`, `tags`, e wikilinks curtos `[[Nota]]`. **Os cabeçalhos de seção são sempre em inglês** — `## Main Idea`, `## Context`, `## Expansion`, `## Connections` — para que ferramentas possam parseá-los de forma estável; o *conteúdo* das seções fica no idioma do vault. Notas com perguntas em aberto na Expansion levam a tag `review`, marcando-as para ciclos futuros de provocação e revisão.
+
+**Layout legado**: se encontrar uma pasta `ZettelKasten/` com `Daily/` e `arquivos/` (e seções em outro idioma), trate como vault legado — funcione normalmente com os nomes existentes e, uma única vez, ofereça migrar para o layout canônico (renomear pastas + traduzir cabeçalhos de seção; conteúdo intacto). Nunca migre sem o usuário pedir.
+
 
 ## Idioma
 
@@ -17,11 +22,12 @@ A skill funciona em qualquer idioma. Duas regras:
 
 1. **Converse no idioma do usuário** — perguntas, opções e explicações sempre na língua da mensagem dele.
 2. **Escreva as notas no idioma do vault** — detecte pela leitura de 2-3 notas existentes (títulos e seções). Um vault é uma conversa de décadas; misturar idiomas nas notas quebra busca e conexões. Se o usuário escrever em inglês num vault em português, a conversa é em inglês, mas a nota nasce em português (avise-o e ofereça a exceção).
-3. **Vault novo**: o idioma do vault é o do usuário. O `init_vault.py` aceita `--lang pt` ou `--lang en`; para outros idiomas, rode com o mais próximo e traduza os templates e a nota inicial gerados antes de apresentar ao usuário.
+3. **Estrutura é sempre em inglês** (pastas e cabeçalhos de seção) — convenção do formato para funcionar igual em qualquer idioma; só o conteúdo muda de idioma.
+4. **Vault novo**: o idioma do conteúdo é o do usuário. O `init_vault.py` aceita `--lang pt` ou `--lang en` (afeta só o texto-guia dos templates e a nota inicial); para outros idiomas, rode com `en` e traduza o conteúdo gerado antes de apresentar.
 
 ## Etapa 0 — Verificar a estrutura (sempre, antes de qualquer fluxo)
 
-Antes de criar ou arquivar qualquer nota, confirme que o vault existe: uma pasta `ZettelKasten/` contendo pelo menos `zettels/` e `templates/`. Sem essa estrutura, o arquivamento forçado não tem onde acontecer — as "threads candidatas" pressupõem notas existentes.
+Antes de criar ou arquivar qualquer nota, confirme que o vault existe: `zettels/` e `templates/` na raiz (layout canônico), ou o layout legado descrito em "O vault". Sem essa estrutura, o arquivamento forçado não tem onde acontecer — as "threads candidatas" pressupõem notas existentes.
 
 **Se a estrutura não existir**, não improvise criando arquivos soltos. Explique ao usuário que o vault precisa ser inicializado e ofereça rodar o script incluído na skill:
 
@@ -29,7 +35,7 @@ Antes de criar ou arquivar qualquer nota, confirme que o vault existe: uma pasta
 python scripts/init_vault.py <pasta-onde-criar-o-vault>
 ```
 
-O script é idempotente (nunca sobrescreve o que já existe) e cria: `zettels/`, `Daily/`, `templates/` (permanent, literature, fleeting, moc — já com a mentalidade de tese embutida), `arquivos/`, e uma nota inicial ("Uma nota é uma tese, não um tópico") que serve de âncora para a primeira conexão do usuário.
+O script é idempotente (nunca sobrescreve o que já existe) e cria na raiz: `zettels/`, `daily/`, `templates/` (permanent, literature, fleeting, moc — com a mentalidade de tese e os cabeçalhos canônicos em inglês), `attachments/`, e uma nota inicial ("Uma nota é uma tese, não um tópico") que serve de âncora para a primeira conexão do usuário.
 
 **Se o usuário pedir explicitamente para começar/montar um Zettelkasten**, rode o script, mostre o que foi criado e oriente o primeiro passo: a próxima nota dele deve nascer conectada à nota inicial — pergunte qual relação (contradiz, completa, exemplifica, responde). Assim a primeira experiência já ensina o método.
 
@@ -61,9 +67,10 @@ Quando o usuário trouxer uma ideia, rascunho ou fleeting note:
 
 ### Etapa 2 — Corpo como argumento
 
-Ajude a escrever o corpo como resposta a uma pergunta, nas palavras do usuário, curto e atômico (uma tese por nota). Estrutura das notas permanentes do vault: Ideia Principal, Contexto, Expansão, Conexões. Para literature notes: o que importa não é o resumo do autor, é a seção de Comentários Pessoais — o que a leitura significa para as perguntas dele.
+Ajude a escrever o corpo como resposta a uma pergunta, nas palavras do usuário, curto e atômico (uma tese por nota). Estrutura das notas permanentes: `## Main Idea`, `## Context`, `## Expansion`, `## Connections` (cabeçalhos em inglês sempre; conteúdo no idioma do vault). Se a Expansion terminar com pergunta em aberto, sugira adicionar a tag `review` — ela marca a nota para revisão e provocação futuras. Para literature notes: o que importa não é o resumo do autor, é a seção de Comentários Pessoais — o que a leitura significa para as perguntas dele.
 
 ### Etapa 3 — Arquivamento forçado (o coração da skill)
+
 
 Antes de salvar, analise o vault (busque por títulos, tags e conteúdo relacionados — Grep nos `zettels/`) e apresente **2 a 4 threads candidatas**: notas existentes com as quais a nova nota conversa. Para cada candidata, nomeie a **relação**:
 
@@ -77,7 +84,7 @@ Então **pergunte ao usuário qual thread a nota entra** (use AskUserQuestion se
 ### Etapa 4 — Efetivar a conexão
 
 Após a escolha:
-- Crie a nota em `zettels/` com frontmatter completo (type, date de hoje, tags da taxonomia existente) e link `[[...]]` para a thread escolhida na seção Conexões.
+- Crie a nota em `zettels/` (raiz do vault) com frontmatter completo (type, date de hoje, tags da taxonomia existente) e link `[[...]]` para a thread escolhida na seção Conexões.
 - Adicione o link reverso na nota escolhida (na seção Conexões dela), citando a relação: `- [[Nota Nova]] — contradiz a tese central`.
 - Nunca crie nota órfã: toda nota nova nasce com pelo menos 1 conexão real.
 - Nunca crie notas-stub vazias como alvo de link.
