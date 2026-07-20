@@ -3,12 +3,13 @@
 
 Uso: python init_vault.py <caminho-do-vault>
 
-Cria (sem sobrescrever nada que já exista):
-  ZettelKasten/
-    zettels/     - as notas (teses atômicas conectadas)
-    Daily/       - diários e capturas fleeting
-    templates/   - templates de nota (permanent, literature, fleeting, moc)
-    arquivos/    - imagens e anexos
+Cria na raiz do vault (sem sobrescrever nada que já exista):
+  zettels/      - as notas (teses atômicas conectadas)
+  daily/        - diários e capturas fleeting
+  templates/    - templates de nota (permanent, literature, fleeting, moc)
+  attachments/  - imagens e anexos
+Cabeçalhos de seção sempre em inglês (Main Idea/Context/Expansion/Connections);
+--lang controla apenas o idioma do texto-guia e da nota inicial.
 """
 import os, sys, shutil
 
@@ -23,16 +24,16 @@ tags:
 
 # {{title}}
 
-## **Ideia Principal**
+## Main Idea
 (A tese, clara e atômica. Teste: alguém poderia discordar deste título? Se não, ainda é tópico.)
 
-## **Contexto**
+## Context
 (De onde veio: leitura, caso real, conversa. O que provocou a ideia.)
 
-## **Expansão**
-(Argumento nas suas palavras. Inclua a melhor objeção contra a própria tese.)
+## Expansion
+(Argumento nas suas palavras. Inclua a melhor objeção. Pergunta em aberto? Adicione a tag `review`.)
 
-## **Conexões**
+## Connections
 - [[Nota existente]] — relação: contradiz | completa | exemplifica | responde
 """,
 "literature_notes.md": """---
@@ -47,16 +48,16 @@ tags:
 
 # {{title}}
 
-## **Resumo**
+## Summary
 (Breve. O resumo é o menos importante desta nota.)
 
-## **Citações Relevantes**
+## Quotes
 - ""
 
-## **Comentários Pessoais**
+## Personal Commentary
 (A parte que vale: o que isso significa para as SUAS perguntas — não o que o autor disse.)
 
-## **Conexões**
+## Connections
 - [[Nota]] — relação
 """,
 "fleeting_notes.md": """---
@@ -100,16 +101,16 @@ tags:
 
 # Uma nota é uma tese, não um tópico
 
-## **Ideia Principal**
+## Main Idea
 Notas que apenas descrevem um assunto não geram conhecimento novo; notas que afirmam algo contestável criam atrito — e o atrito entre afirmações é de onde a originalidade nasce.
 
-## **Contexto**
+## Context
 Primeira nota deste vault, criada na inicialização. Niklas Luhmann escreveu 70 livros não acumulando conteúdo, mas forçando cada nota nova a entrar numa conversa com as existentes.
 
-## **Expansão**
+## Expansion
 Teste prático para todo título: dá para discordar dele? "Observabilidade no sistema X" — não dá, é tópico. "Sem telemetria, todo incidente vira arqueologia" — dá, é tese. Objeção honesta: nem tudo precisa ser tese (notas de referência têm valor); o risco é o vault virar SÓ referência.
 
-## **Conexões**
+## Connections
 - (esta nota espera sua primeira conexão — crie sua próxima nota e decida a relação entre elas)
 """
 
@@ -125,16 +126,16 @@ tags:
 
 # {{title}}
 
-## **Main claim**
+## Main Idea
 (The thesis, clear and atomic. Test: could someone disagree with this title? If not, it is still a topic.)
 
-## **Context**
+## Context
 (Where it came from: a reading, a real case, a conversation. What sparked the idea.)
 
-## **Expansion**
+## Expansion
 (The argument in your own words. Include the best objection against your own thesis.)
 
-## **Connections**
+## Connections
 - [[Existing note]] — relation: contradicts | completes | exemplifies | answers
 """,
 "literature_notes.md": """---
@@ -149,16 +150,16 @@ tags:
 
 # {{title}}
 
-## **Summary**
+## Summary
 (Brief. The summary is the least important part of this note.)
 
-## **Relevant quotes**
+## Quotes
 - ""
 
-## **Personal commentary**
+## Personal Commentary
 (The part that matters: what this means for YOUR questions — not what the author said.)
 
-## **Connections**
+## Connections
 - [[Note]] — relation
 """,
 "fleeting_notes.md": """---
@@ -202,16 +203,16 @@ tags:
 
 # A note is a claim, not a topic
 
-## **Main claim**
+## Main Idea
 Notes that merely describe a subject produce no new knowledge; notes that assert something contestable create friction — and friction between claims is where originality comes from.
 
-## **Context**
+## Context
 First note of this vault, created at initialization. Niklas Luhmann wrote 70 books not by hoarding content, but by forcing every new note into a conversation with the existing ones.
 
-## **Expansion**
+## Expansion
 Practical test for every title: can you disagree with it? "Observability in system X" — you cannot, it is a topic. "Without telemetry, every incident becomes archaeology" — you can, it is a claim. Honest objection: not everything needs to be a claim (reference notes have value); the risk is a vault that is ONLY reference.
 
-## **Connections**
+## Connections
 - (this note awaits its first connection — create your next note and decide the relation between them)
 """
 
@@ -225,9 +226,9 @@ def main():
     args = ap.parse_args()
     templates = TEMPLATES if args.lang == "pt" else TEMPLATES_EN
     starter = STARTER if args.lang == "pt" else STARTER_EN
-    base = os.path.join(args.path, "ZettelKasten")
+    base = args.path
     created, skipped = [], []
-    for d in ("zettels", "Daily", "templates", "arquivos"):
+    for d in ("zettels", "daily", "templates", "attachments"):
         p = os.path.join(base, d)
         (skipped if os.path.exists(p) else created).append(p)
         os.makedirs(p, exist_ok=True)
